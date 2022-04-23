@@ -25,21 +25,32 @@ class Menu {
   //   return this.menu.filter((item) => item.type === "pizza");
   // }
 
-  templateMenuItem({ name, description, price }) {
+  templateMenuItem({ name, description, price, spicy }) {
     const article = document.createElement("article");
     article.classList.add("menu-item");
     const h3 = document.createElement("h3");
-    h3.textContent = name;
+    h3.textContent = `${name}`;
+    if (spicy) {
+      const divSpicy = document.createElement("div");
+      divSpicy.classList.add("spicy");
+      h3.append(divSpicy);
+    }
     const p = document.createElement("p");
     p.textContent = description;
+    const div = document.createElement("div");
+    div.classList.add("menu-body");
+    div.append(h3, p);
     const button = document.createElement("button");
-    button.textContent = `$${price}`;
-    article.append(h3, p, button);
+    button.classList.add("primary");
+    button.textContent = `$${price.toFixed(2)}`;
+    article.append(div, button);
     return article;
   }
 
   render(category) {
-    let itemList = this.getCategory(category);
+    let itemList = this.getCategory(category).sort(
+      (a, b) => a.menuOrder - b.menuOrder
+    );
     const div = document.createElement("div");
     div.classList.add("menu-container");
     itemList.forEach((item) => {

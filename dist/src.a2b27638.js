@@ -189,7 +189,7 @@ var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
-},{"./../assets/spicy.svg":[["spicy.c01b4fda.svg","assets/spicy.svg"],"assets/spicy.svg"],"_css_loader":"node_modules/parcel-bundler/src/builtins/css-loader.js"}],"src/menu.js":[function(require,module,exports) {
+},{"./../assets/spicy.svg":[["spicy.c01b4fda.svg","assets/spicy.svg"],"assets/spicy.svg"],"./../assets/bg-header.jpg":[["bg-header.4787c8b2.jpg","assets/bg-header.jpg"],"assets/bg-header.jpg"],"_css_loader":"node_modules/parcel-bundler/src/builtins/css-loader.js"}],"src/menu.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -352,16 +352,28 @@ var Menu = /*#__PURE__*/function () {
     value: function templateMenuItem(_ref) {
       var name = _ref.name,
           description = _ref.description,
-          price = _ref.price;
+          price = _ref.price,
+          spicy = _ref.spicy;
       var article = document.createElement("article");
       article.classList.add("menu-item");
       var h3 = document.createElement("h3");
-      h3.textContent = name;
+      h3.textContent = "".concat(name);
+
+      if (spicy) {
+        var divSpicy = document.createElement("div");
+        divSpicy.classList.add("spicy");
+        h3.append(divSpicy);
+      }
+
       var p = document.createElement("p");
       p.textContent = description;
+      var div = document.createElement("div");
+      div.classList.add("menu-body");
+      div.append(h3, p);
       var button = document.createElement("button");
-      button.textContent = "$".concat(price);
-      article.append(h3, p, button);
+      button.classList.add("primary");
+      button.textContent = "$".concat(price.toFixed(2));
+      article.append(div, button);
       return article;
     }
   }, {
@@ -369,7 +381,9 @@ var Menu = /*#__PURE__*/function () {
     value: function render(category) {
       var _this = this;
 
-      var itemList = this.getCategory(category);
+      var itemList = this.getCategory(category).sort(function (a, b) {
+        return a.menuOrder - b.menuOrder;
+      });
       var div = document.createElement("div");
       div.classList.add("menu-container");
       itemList.forEach(function (item) {
