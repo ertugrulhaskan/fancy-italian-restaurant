@@ -31,9 +31,7 @@ class Menu {
     if (!isChecked) {
       $listItem.forEach((item) => {
         let isSpicy = item.dataset.spicy;
-        if (isSpicy === "true") {
-          item.classList.add("hidden");
-        }
+        isSpicy === "true" && item.classList.add("hidden");
       });
     } else {
       $listItem.forEach((item) => {

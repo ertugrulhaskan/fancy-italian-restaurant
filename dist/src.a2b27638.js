@@ -356,10 +356,7 @@ var Menu = /*#__PURE__*/function () {
       if (!isChecked) {
         $listItem.forEach(function (item) {
           var isSpicy = item.dataset.spicy;
-
-          if (isSpicy === "true") {
-            item.classList.add("hidden");
-          }
+          isSpicy === "true" && item.classList.add("hidden");
         });
       } else {
         $listItem.forEach(function (item) {
