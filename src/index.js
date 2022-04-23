@@ -14,17 +14,6 @@ class Menu {
     return this.menu.filter((item) => item.type === category);
   }
 
-  // TODO: Create a category function
-  // getStarters() {
-  //   return this.menu.filter((item) => item.type === "starters");
-  // }
-  // getPasta() {
-  //   return this.menu.filter((item) => item.type === "pasta");
-  // }
-  // getPizza() {
-  //   return this.menu.filter((item) => item.type === "pizza");
-  // }
-
   toggle(isChecked, category) {
     const $selector = document.querySelector(`#${category}`);
     const $listItem = $selector.querySelectorAll("article");
