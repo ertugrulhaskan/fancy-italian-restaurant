@@ -348,6 +348,26 @@ var Menu = /*#__PURE__*/function () {
     // }
 
   }, {
+    key: "toggle",
+    value: function toggle(isChecked, category) {
+      var $selector = document.querySelector("#".concat(category));
+      var $listItem = $selector.querySelectorAll("article");
+
+      if (!isChecked) {
+        $listItem.forEach(function (item) {
+          var isSpicy = item.dataset.spicy;
+
+          if (isSpicy === "true") {
+            item.classList.add("hidden");
+          }
+        });
+      } else {
+        $listItem.forEach(function (item) {
+          item.classList.remove("hidden");
+        });
+      }
+    }
+  }, {
     key: "templateMenuItem",
     value: function templateMenuItem(_ref) {
       var name = _ref.name,
@@ -358,13 +378,6 @@ var Menu = /*#__PURE__*/function () {
       article.classList.add("menu-item");
       var h3 = document.createElement("h3");
       h3.textContent = "".concat(name);
-
-      if (spicy) {
-        var divSpicy = document.createElement("div");
-        divSpicy.classList.add("spicy");
-        h3.append(divSpicy);
-      }
-
       var p = document.createElement("p");
       p.textContent = description;
       var div = document.createElement("div");
@@ -374,6 +387,14 @@ var Menu = /*#__PURE__*/function () {
       button.classList.add("primary");
       button.textContent = "$".concat(price.toFixed(2));
       article.append(div, button);
+
+      if (spicy) {
+        var divSpicy = document.createElement("div");
+        divSpicy.classList.add("spicy");
+        h3.append(divSpicy);
+      }
+
+      article.setAttribute("data-spicy", spicy);
       return article;
     }
   }, {
@@ -404,7 +425,14 @@ document.addEventListener("DOMContentLoaded", function () {
   var menu = new Menu();
   $starters.append(menu.render("starters"));
   $pasta.append(menu.render("pasta"));
-  $pizza.append(menu.render("pizza"));
+  $pizza.append(menu.render("pizza")); // TODO: Add to filter for multiple category
+
+  var $filter = document.querySelector(".filter input[type=checkbox]");
+  $filter.addEventListener("change", function (e) {
+    var isChecked = e.target.checked;
+    var selectedCategory = e.target.closest("section").id;
+    menu.toggle(isChecked, selectedCategory);
+  });
 });
 },{"./styles.css":"src/styles.css","./menu":"src/menu.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
